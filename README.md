@@ -1,16 +1,16 @@
-# django-courserank
+# django-courserank #
 --------------------------------------------------------
 
 This is a basic Courses-Rank App developed using the django framework. 
 
-#Features: 
+## Features : ##
 * It contains courses taught at IITB with ratings. 
 * Users can create accounts and add profile pics, and also update their info.
 * They are given the ability to view courses and like or dislike them.
 * Also, they are allowed to write reviews for courses and rate them. 
 * Users can also like or dislike reviews written by them and other users as well.
 
-#Some pictures of the app:
+## Some pictures of the app: ##
 
 ![](media/Courserank-1.png)
 ![](media/Courserank-2.png)
