@@ -1,0 +1,19 @@
+{% extends "courses/base.html" %}
+
+{% block content %}   
+    {% for course in courses %}
+        <article class="media content-section border border-dark clearfix">
+            <div class="media-body">
+            <h2><a class="article-title" href="{% url 'courses_detail' course.id %}">{{ course.course_name }} ({{ course.course_code }})</a></h2>
+            <hr>
+            <h4 class="article-content"> Course Instructor: {{ course.course_instructor }}</h4>
+            <h5><b>Content:</b></h5>
+            <div class = "container">
+                <p class="article-content">{{ course.details }}</p>
+            </div>
+
+            </div>
+        </article>
+    {% endfor %}
+    
+{% endblock content %}

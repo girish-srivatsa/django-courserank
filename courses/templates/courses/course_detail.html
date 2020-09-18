@@ -1,0 +1,111 @@
+{% extends "courses/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}  
+    <article class="media content-section border border-dark">
+        <div class="media-body">
+            
+            <h2><a class="article-title" href="#">{{ object.course_name }}</a>- {{ object.course_code }}</h2>
+            <hr>
+            <div class = "article meta-data" style = "position:absolute;right:40px">
+                {% if user.is_superuser %}
+                    <a clear = "right" class = "btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'courses_update' object.pk %}">Update</a>
+                    <a class = "btn btn-danger btn-sm mt-1 mb-1" href="{% url 'courses_delete' object.pk %}">Delete</a>
+                {% endif %}
+            </div>
+            <h3 class="article-content">{{ object.course_instructor }}</h3>
+            <p class="article-content">
+                <h4><b>Content:</b></h4>
+                {{ object.details }}
+            </p>
+            <h3 class="article-content">Rating:</h3>
+                {% for i in rating_count %}
+                    <span class = "fa fa-star" style="color:orange"></span>
+                {% endfor %}
+                {% for i in non_rating_count %}
+                    <span class = "fa fa-star"></span>
+                {% endfor %}
+          
+            
+            <form action="{% url 'like_course' object.id %}" style = "position: relative;left:420px;top:30px;" method = "POST">
+                {% csrf_token %}
+
+                <button type = "submit" value = '{{ object.id }}' class = "btn btn-dark btn-sm">     
+                    Like 
+                </button> 
+                - {{ total_likes }} Likes
+                
+            </form>
+
+            <form action="{% url 'dislike_course' object.id %}" style = "position: relative;left:550px;top:0px;" method = "POST">
+                {% csrf_token %}                
+                <button type = "submit" value = '{{ object.id }}' class = "btn btn-danger btn-sm">    
+                    UnLike 
+                </button> 
+                - {{ total_dislikes }} Dislikes
+            </form>
+        
+        </div>
+    </article>
+
+    <article class = "media content-section border border-primary">
+        <div class = "container">    
+            <h4>Add your reviews!</h4>
+            <hr>
+            <form action="{% url 'form' object.pk %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type ="submit" style = "position: relative;left:0px;top:0px;" class="btn btn-primary btn-sm">
+                    Submit Review
+                </button>
+            </form>
+        </div>
+    </article>
+
+    {% if reviews.count %}
+        <article class="media content-section border border-dark">
+            <div class = "container">
+            {% if reviews.count %}
+                <h3>Previous Reviews: </h3>
+                <hr>
+                <ul>
+                    {% for review in reviews %}
+                    <li>
+                        <article class="media content-section border border-light">
+                        <div>
+                            <h5>User: {{ review.course_rater.username }} - Rating:{{ review.course_rating }}</h5>
+                            
+                        <hr>
+                        
+                        <div class = "container" style="font-size: large;"><p>{{ review.course_review }}</p></div>
+                        
+                        <form action="{% url 'like_review' review.pk %}" style = "position: relative;left:330px;top:30px;" method = "POST">
+                            {% csrf_token %}                  
+                            <button type = "submit" value = '{{ review.pk }}' class = "btn btn-primary btn-sm">    
+                                Like 
+                            </button> 
+                            - {{ review.review_likes.count }} Likes
+                        </form>
+
+                        <form action="{% url 'dislike_review' review.pk %}" style = "position: relative;left:450px;top:0px;" method = "POST">
+                            {% csrf_token %}                  
+                            <button type = "submit" value = '{{ review.pk }}' class = "btn btn-danger btn-sm">    
+                                UnLike 
+                            </button> 
+                            - {{ review.review_dislikes.count }} disLikes
+                        </form>
+                    </div>
+                    </article>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+
+        </article>
+    {% endif %}
+
+    
+
+    
+{% endblock content %}
