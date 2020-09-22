@@ -1,4 +1,4 @@
-# django-courserank - https://github.com/girish-srivatsa/django-diary-chat-aes-ECC #
+# django-courserank - https://github.com/girish-srivatsa/django-courserank #
 --------------------------------------------------------
 
 This is a basic Courses-Rank App developed using the django framework. 
